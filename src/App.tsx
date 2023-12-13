@@ -1,13 +1,14 @@
+```tsx
 import React from 'react';
+import './styles/App.css';
 import DocumentSelection from './components/DocumentSelection';
 import TextBox from './components/TextBox';
 import ActionButton from './components/ActionButton';
 import HighlightButton from './components/HighlightButton';
 import EntityButton from './components/EntityButton';
-import ChatBox from './components/ChatBox';
-import MethodSelection from './components/MethodSelection';
+import Chat from './components/Chat';
 
-const App: React.FC = () => {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -20,10 +21,10 @@ const App: React.FC = () => {
         <HighlightButton />
         <EntityButton />
       </div>
-      <ChatBox />
-      <MethodSelection />
+      <Chat />
     </div>
   );
 }
 
 export default App;
+```

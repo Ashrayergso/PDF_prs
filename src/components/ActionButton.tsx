@@ -1,20 +1,32 @@
-import React from 'react';
-import { ActionItemExtraction } from '../utils/ActionItemExtraction';
+import React, { useState } from 'react';
+import { extractAction } from '../utils/ActionExtraction';
 
 interface ActionButtonProps {
   text: string;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({ text }) => {
-  const handleActionExtraction = () => {
-    const actionItems = ActionItemExtraction(text);
-    console.log(actionItems); // Replace this with your own logic
+  const [actions, setActions] = useState<string[]>([]);
+
+  const handleActionExtraction = async () => {
+    const extractedActions = await extractAction(text);
+    setActions(extractedActions);
   };
 
   return (
-    <button onClick={handleActionExtraction}>
-      Extract Action Items
-    </button>
+    <div id="action-button">
+      <button onClick={handleActionExtraction}>Extract Actions</button>
+      {actions.length > 0 && (
+        <div>
+          <h3>Extracted Actions:</h3>
+          <ul>
+            {actions.map((action, index) => (
+              <li key={index}>{action}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 

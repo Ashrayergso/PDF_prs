@@ -1,16 +1,22 @@
-import { ParsedText } from '../types/index';
+```typescript
+import { Llama_index } from 'llama_index';
+import { Text } from '../types';
 
-// Assuming we have a database setup with a table named 'documents'
-import { db } from './DatabaseConnection';
+export class TextIndexing {
+  private index: Llama_index;
 
-/**
- * Function to add parsed and split text to the database
- * @param parsedText - The parsed text object containing document id and sentences
- */
-export const addParsedTextToIndex = async (parsedText: ParsedText) => {
-  try {
-    await db('documents').insert(parsedText);
-  } catch (error) {
-    console.error(`Error while adding parsed text to index: ${error.message}`);
+  constructor() {
+    this.index = new Llama_index();
   }
-};
+
+  public indexText(text: Text[]): void {
+    text.forEach((textItem) => {
+      this.index.addDocument(textItem);
+    });
+  }
+
+  public searchIndex(query: string): Text[] {
+    return this.index.search(query);
+  }
+}
+```

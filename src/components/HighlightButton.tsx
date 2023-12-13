@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HighlightExtraction } from '../utils/HighlightExtraction';
 
 interface HighlightButtonProps {
-  documentText: string;
-  setHighlights: React.Dispatch<React.SetStateAction<string[]>>;
+  text: string;
+  onHighlightExtracted: (highlights: string[]) => void;
 }
 
-const HighlightButton: React.FC<HighlightButtonProps> = ({ documentText, setHighlights }) => {
-  const handleHighlightExtraction = () => {
-    const highlights = HighlightExtraction(documentText);
-    setHighlights(highlights);
+export const HighlightButton: React.FC<HighlightButtonProps> = ({ text, onHighlightExtracted }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleHighlightExtraction = async () => {
+    setIsLoading(true);
+    const highlights = await HighlightExtraction(text);
+    onHighlightExtracted(highlights);
+    setIsLoading(false);
   };
 
   return (
-    <button onClick={handleHighlightExtraction}>
-      Extract Highlights
+    <button id="highlight-button" onClick={handleHighlightExtraction} disabled={isLoading}>
+      {isLoading ? 'Extracting...' : 'Extract Highlights'}
     </button>
   );
 };
-
-export default HighlightButton;

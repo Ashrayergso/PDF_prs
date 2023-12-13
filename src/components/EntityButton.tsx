@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import { EntityExtraction } from '../utils/EntityExtraction';
+import { extractEntity } from '../utils/EntityExtraction';
 
-interface EntityButtonProps {
-  document: string;
-}
-
-const EntityButton: React.FC<EntityButtonProps> = ({ document }) => {
+const EntityButton: React.FC = () => {
   const [entities, setEntities] = useState<string[]>([]);
 
   const handleEntityExtraction = async () => {
-    const extractedEntities = await EntityExtraction(document);
+    const extractedEntities = await extractEntity();
     setEntities(extractedEntities);
   };
 
   return (
-    <div>
+    <div id="entity-button">
       <button onClick={handleEntityExtraction}>Extract Entities</button>
       {entities.length > 0 && (
         <div>

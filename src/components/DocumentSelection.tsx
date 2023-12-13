@@ -2,28 +2,28 @@ import React, { useState } from 'react';
 import { ingestDocument } from '../utils/DocumentIngestion';
 
 interface DocumentSelectionProps {
-  onDocumentSelect: (document: string) => void;
+  onDocumentSelected: (document: Document) => void;
 }
 
-const DocumentSelection: React.FC<DocumentSelectionProps> = ({ onDocumentSelect }) => {
-  const [selectedDocument, setSelectedDocument] = useState<string>('');
+const DocumentSelection: React.FC<DocumentSelectionProps> = ({ onDocumentSelected }) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleDocumentChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
-    if (file) {
-      const document = await ingestDocument(file);
-      setSelectedDocument(document);
-      onDocumentSelect(document);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    setSelectedFile(file);
+  };
+
+  const handleFileUpload = async () => {
+    if (selectedFile) {
+      const document = await ingestDocument(selectedFile);
+      onDocumentSelected(document);
     }
   };
 
   return (
-    <div>
-      <label htmlFor="document-upload" className="custom-file-upload">
-        Upload Document
-      </label>
-      <input id="document-upload" type="file" accept=".pdf" onChange={handleDocumentChange} />
-      {selectedDocument && <p>Selected Document: {selectedDocument}</p>}
+    <div id="document-selection">
+      <input type="file" accept=".pdf" onChange={handleFileChange} />
+      <button onClick={handleFileUpload}>Upload</button>
     </div>
   );
 };

@@ -1,19 +1,22 @@
-import { PDFDocument } from 'pdf-lib';
-import { ParsedDocument } from '../types/index';
+```typescript
+import { PDFDocument } from 'pdfjs-dist';
 
-export async function parseDocument(file: Buffer): Promise<ParsedDocument> {
-  const pdfDoc = await PDFDocument.load(file);
-  const pageCount = pdfDoc.getPageCount();
-  let parsedText = '';
+export interface ParsedDocument {
+  text: string;
+}
+
+export async function parseDocument(file: File): Promise<ParsedDocument> {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdfDoc = await PDFDocument.load(arrayBuffer);
+  const pageCount = pdfDoc.getPages().length;
+  let text = '';
 
   for (let i = 0; i < pageCount; i++) {
-    const page = pdfDoc.getPage(i);
-    const textContent = await page.getTextContent();
-    parsedText += textContent.items.map(item => item.str).join(' ');
+    const page = pdfDoc.getPages()[i];
+    const content = await page.getTextContent();
+    text += content.items.map(item => item.str).join(' ');
   }
 
-  return {
-    text: parsedText,
-    pageCount: pageCount,
-  };
+  return { text };
 }
+```

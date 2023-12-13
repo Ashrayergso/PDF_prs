@@ -1,13 +1,8 @@
 ```typescript
-import { ParsedText } from '../types/index';
+import { Text } from '../types';
 
-/**
- * Function to split the parsed text into sentences.
- * @param parsedText - The parsed text from the document.
- * @returns An array of sentences.
- */
-export function splitTextIntoSentences(parsedText: ParsedText): string[] {
-  const sentences = parsedText.content.split('. ');
-  return sentences;
+export function splitText(parsedText: string): Text[] {
+    const sentences = parsedText.match(/[^\.!\?]+[\.!\?]+/g);
+    return sentences ? sentences.map((sentence, index) => ({ id: index, text: sentence.trim() })) : [];
 }
 ```

@@ -1,19 +1,19 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface TextBoxProps {
-  documentText: string;
+  text: string;
 }
 
-const TextBox: FC<TextBoxProps> = ({ documentText }) => {
-  const [text, setText] = useState<string>('');
+const TextBox: React.FC<TextBoxProps> = ({ text }) => {
+  const [displayText, setDisplayText] = useState<string>('');
 
   useEffect(() => {
-    setText(documentText);
-  }, [documentText]);
+    setDisplayText(text);
+  }, [text]);
 
   return (
-    <div className="text-box">
-      <textarea readOnly value={text} />
+    <div id="text-box">
+      <p>{displayText}</p>
     </div>
   );
 };

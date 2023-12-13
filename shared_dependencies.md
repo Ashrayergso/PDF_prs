@@ -2,30 +2,24 @@ Shared Dependencies:
 
 1. **React**: All the .tsx files will share the React library for creating the user interface.
 
-2. **Typescript**: All the .ts and .tsx files will share the Typescript language for static typing.
+2. **Typescript**: All the .tsx and .ts files will use Typescript for static typing.
 
-3. **Document Types**: The types defined in "src/types/index.ts" will be shared across all the utility files and component files that require them.
+3. **Llama_index**: The DocumentIngestion.ts and TextIndexing.ts files will use this for document ingestion and indexing.
 
-4. **Utility Functions**: The utility functions defined in the "src/utils" directory will be shared across the component files that require them. These include functions for document ingestion, parsing, text splitting, text indexing, action item extraction, highlight extraction, entity extraction, and chat processing.
+4. **PDF.js**: DocumentParsing.ts will use this library for parsing PDF documents.
 
-5. **DOM Element IDs**: The IDs of DOM elements manipulated by the React components will be shared across the corresponding .tsx files and potentially the utility files. These may include IDs for the document selection dropdown, text box, action button, highlight button, entity button, chat box, and method selection.
+5. **BM25, rerank, llm**: These NLP methods will be used in ChatLogic.ts for the Q&A chat.
 
-6. **Message Names**: Any message names used for communication between components or between the frontend and backend will be shared across the relevant files.
+6. **DocumentSelection, TextBox, ActionButton, HighlightButton, EntityButton, Chat**: These are React components that will be imported in App.tsx.
 
-7. **Package Dependencies**: The dependencies listed in "package.json" will be shared across all the files that require them. These may include libraries for PDF parsing, text processing, database interaction, and more.
+7. **DocumentIngestion, DocumentParsing, TextSplitting, TextIndexing, ActionExtraction, HighlightExtraction, EntityExtraction, ChatLogic**: These are utility functions that will be imported in various components as per their requirements.
 
-8. **Webpack or Babel**: For bundling and transpiling the code, these dependencies will be shared across all the files.
+8. **App.css**: This stylesheet will be imported in App.tsx for styling the application.
 
-9. **CSS/SCSS**: If there are any shared styles, they will be imported in the relevant .tsx files.
+9. **DOM Element IDs**: 'document-selection', 'text-box', 'action-button', 'highlight-button', 'entity-button', 'chat-box' will be used in respective components for DOM manipulation.
 
-10. **React Router**: If used, this will be shared across all the .tsx files for routing.
+10. **Message Names**: 'documentSelected', 'textParsed', 'textSplit', 'textIndexed', 'actionExtracted', 'highlightExtracted', 'entityExtracted', 'chatMessage' will be used for communication between components and utilities.
 
-11. **State Management Libraries**: If a state management library like Redux or Context API is used, it will be shared across all the .tsx files.
+11. **Data Schemas**: 'Document', 'Text', 'Action', 'Highlight', 'Entity', 'ChatMessage' will be used across various files for maintaining a consistent data structure.
 
-12. **Axios or Fetch API**: For making HTTP requests, these will be shared across files that require them.
-
-13. **Lodash or Underscore**: For utility functions, these will be shared across files that require them.
-
-14. **PropTypes**: If used, this will be shared across all the .tsx files for prop type checking.
-
-15. **ESLint and Prettier**: For linting and formatting, these will be shared across all the files.
+12. **Function Names**: 'ingestDocument', 'parseDocument', 'splitText', 'indexText', 'extractAction', 'extractHighlight', 'extractEntity', 'handleChat' will be used in respective utility files and components.

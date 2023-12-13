@@ -1,10 +1,23 @@
 ```typescript
-import { ParsedText } from '../types/index';
+import { Highlight } from '../types';
 
-export function extractHighlights(parsedText: ParsedText): string[] {
-    // This is a placeholder for the actual implementation.
-    // The actual implementation would use some form of NLP or text analysis to determine the key highlights.
-    // For now, we'll just return the first sentence of each paragraph as a "highlight".
-    return parsedText.map(paragraph => paragraph.split('.')[0]);
+// This is a placeholder function for extracting highlights from text.
+// In a real-world application, this would likely involve some form of NLP or machine learning.
+function extractHighlights(text: string): Highlight[] {
+  const highlights: Highlight[] = [];
+
+  // Split the text into sentences
+  const sentences = text.split('. ');
+
+  // For each sentence, if it contains certain keywords, add it to the highlights
+  for (const sentence of sentences) {
+    if (sentence.includes('important') || sentence.includes('note')) {
+      highlights.push({ text: sentence });
+    }
+  }
+
+  return highlights;
 }
+
+export default extractHighlights;
 ```

@@ -1,20 +1,23 @@
-import fs from 'fs';
-import { PDFDocument } from 'pdf-lib';
-import { Document } from '../types/index';
+```typescript
+import { Llama } from 'llama_index';
+import { Document } from '../types';
 
-export async function ingestDocument(filePath: string): Promise<Document> {
-  const fileBuffer = fs.readFileSync(filePath);
-  const pdfDoc = await PDFDocument.load(fileBuffer);
-  const pageCount = pdfDoc.getPageCount();
+export class DocumentIngestion {
+  private llama: Llama;
 
-  let documentText = '';
-  for (let i = 0; i < pageCount; i++) {
-    const page = pdfDoc.getPage(i);
-    documentText += page.getTextContent();
+  constructor() {
+    this.llama = new Llama();
   }
 
-  return {
-    filePath,
-    text: documentText,
-  };
+  public ingestDocument(document: Document): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.llama.ingest(document);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
+```
